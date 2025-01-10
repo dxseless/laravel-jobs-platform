@@ -16,4 +16,9 @@ class Job extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function employer()
+    {
+        return $this->belongsTo(Employer::class);
+    }
 }

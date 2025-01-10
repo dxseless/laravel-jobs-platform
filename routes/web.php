@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Employer;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,14 @@ Route::get('/contact', function () {
 
 Route::get('/users', function () {
     return view('users', ['users' => User::all()]);
+});
+
+Route::get('/employers', function () {
+    $employers = Employer::all(); 
+    return view('employers', ['employers' => $employers]);
+});
+
+Route::get('/employers/{employer}', function (Employer $employer) {
+    $employer->load('jobs');
+    return view('employer', ['employer' => $employer]);
 });

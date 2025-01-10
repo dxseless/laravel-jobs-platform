@@ -17,7 +17,9 @@ class EmployerFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->company(), 
+            'main_office_location' => fake()->city(),
+            'employer_phone' => fake()->phoneNumber(), 
         ];
     }
 }
