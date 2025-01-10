@@ -11,7 +11,7 @@ Route::get('/', function () {
 });
 
 Route::get('/jobs', function () {
-    return view('jobs', ['jobs' => Job::all()]);
+    return view('jobs', ['jobs' => Job::paginate(3)]);
 });
 
 Route::get('/job/{job}', function (Job $job) {
@@ -23,12 +23,11 @@ Route::get('/contact', function () {
 });
 
 Route::get('/users', function () {
-    return view('users', ['users' => User::all()]);
+    return view('users', ['users' => User::paginate(3)]);
 });
 
 Route::get('/employers', function () {
-    $employers = Employer::all(); 
-    return view('employers', ['employers' => $employers]);
+    return view('employers', ['employers' => Employer::paginate(3)]);
 });
 
 Route::get('/employers/{employer}', function (Employer $employer) {

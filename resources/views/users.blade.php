@@ -13,6 +13,9 @@
         </li>
     @endforeach
     </ul>
+    <div>
+        {{ $users->links() }}
+    </div>
     <style>
         .user-list {
             list-style: none; 
