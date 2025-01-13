@@ -1,20 +1,54 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+require __DIR__.'/auth.php';
+
+use App\Models\Employer;
+use App\Models\Job;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/jobs', function (Request $request) {
+    $jobs = Job::query()
+        ->when($request->has('title'), function ($query) use ($request) {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        })
+        ->when($request->has('location'), function ($query) use ($request) {
+            $query->where('location', 'like', '%' . $request->location . '%');
+        })
+        ->when($request->has('salary_min'), function ($query) use ($request) {
+            $query->where('salary', '>=', $request->salary_min);
+        })
+        ->when($request->has('salary_max'), function ($query) use ($request) {
+            $query->where('salary', '<=', $request->salary_max);
+        })
+        ->paginate(10);
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    return view('jobs', ['jobs' => $jobs]);
 });
 
-require __DIR__.'/auth.php';
+Route::get('/job/{job}', function (Job $job) {
+    return view('job', ['job' => $job]);
+});
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('/users', function () {
+    return view('users', ['users' => User::paginate(3)]);
+});
+
+Route::get('/employers', function () {
+    return view('employers', ['employers' => Employer::paginate(3)]);
+});
+
+Route::get('/employers/{employer}', function (Employer $employer) {
+    $employer->load('jobs');
+    return view('employer', ['employer' => $employer]);
+});
