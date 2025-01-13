@@ -12,6 +12,25 @@ class Job extends Model
 
     protected $table = 'job_listings';
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['title'] ?? false, function ($query, $title) {
+            $query->where('title', 'like', '%' . $title . '%');
+        });
+
+        $query->when($filters['location'] ?? false, function ($query, $location) {
+            $query->where('location', 'like', '%' . $location . '%');
+        });
+
+        $query->when($filters['salary_min'] ?? false, function ($query, $salaryMin) {
+            $query->where('salary', '>=', $salaryMin);
+        });
+
+        $query->when($filters['salary_max'] ?? false, function ($query, $salaryMax) {
+            $query->where('salary', '<=', $salaryMax);
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

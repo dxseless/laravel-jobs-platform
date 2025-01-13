@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__.'/auth.php';
-
 use App\Models\Employer;
 use App\Models\Job;
 use App\Models\User;
@@ -15,18 +13,7 @@ Route::get('/', function () {
 
 Route::get('/jobs', function (Request $request) {
     $jobs = Job::query()
-        ->when($request->has('title'), function ($query) use ($request) {
-            $query->where('title', 'like', '%' . $request->title . '%');
-        })
-        ->when($request->has('location'), function ($query) use ($request) {
-            $query->where('location', 'like', '%' . $request->location . '%');
-        })
-        ->when($request->has('salary_min'), function ($query) use ($request) {
-            $query->where('salary', '>=', $request->salary_min);
-        })
-        ->when($request->has('salary_max'), function ($query) use ($request) {
-            $query->where('salary', '<=', $request->salary_max);
-        })
+        ->filter($request->only(['title', 'location', 'salary_min', 'salary_max']))
         ->paginate(10);
 
     return view('jobs', ['jobs' => $jobs]);
