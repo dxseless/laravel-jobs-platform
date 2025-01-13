@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\LikeController;
 use App\Models\Employer;
 use App\Models\Job;
 use App\Models\User;
@@ -19,10 +22,6 @@ Route::get('/jobs', function (Request $request) {
     return view('jobs', ['jobs' => $jobs]);
 });
 
-Route::get('/job/{job}', function (Job $job) {
-    return view('job', ['job' => $job]);
-});
-
 Route::get('/contact', function () {
     return view('contact');
 });
@@ -39,3 +38,11 @@ Route::get('/employers/{employer}', function (Employer $employer) {
     $employer->load('jobs');
     return view('employer', ['employer' => $employer]);
 });
+
+Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+
+Route::post('/jobs/{job}/like', [JobController::class, 'like'])->name('jobs.like');
+Route::post('/jobs/{job}/unlike', [JobController::class, 'unlike'])->name('jobs.unlike');
+
+Route::post('/jobs/{job}/favorite', [JobController::class, 'addToFavorites'])->name('jobs.favorite');
+Route::post('/jobs/{job}/unfavorite', [JobController::class, 'removeFromFavorites'])->name('jobs.unfavorite');
