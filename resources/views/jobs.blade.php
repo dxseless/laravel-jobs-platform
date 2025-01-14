@@ -27,7 +27,6 @@
         <button type="submit" class="filter-button">Filter</button>
     </form>
 
-    <!-- Список вакансий -->
     <ul class="job-list">
         @foreach ($jobs as $job)
             <li class="job-item">
@@ -40,14 +39,12 @@
         @endforeach
     </ul>
 
-    <!-- Пагинация -->
     <div class="pagination">
         {{ $jobs->withQueryString()->links() }}
     </div>
 </x-layout>
 
 <style>
-    /* Стили для формы фильтрации */
     .filter-form {
         margin-bottom: 20px;
         padding: 20px;
