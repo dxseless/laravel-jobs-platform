@@ -55,6 +55,19 @@
             </form>
         </div>
     </div>
+
+    <p>
+        <strong>
+            Категория:
+        </strong> {{ $job->category->name }}</p>
+    <p>
+        <strong>
+            Теги:
+        </strong>
+        @foreach($job->tags as $tag)
+            <span class="badge badge-secondary">{{ $tag->name }}</span>
+        @endforeach
+    </p>
     <style>
         body {
             font-family: Arial, sans-serif;

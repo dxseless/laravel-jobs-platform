@@ -24,6 +24,30 @@
             <input type="number" name="salary_max" id="salary_max" value="{{ request('salary_max') }}" placeholder="Max salary">
         </div>
 
+        <div class="filter-group">
+            <label for="category">Category:</label>
+            <select name="category" id="category" class="form-control">
+                <option value="">All Categories</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="tag">Tag:</label>
+            <select name="tag" id="tag" class="form-control">
+                <option value="">All Tags</option>
+                @foreach($tags as $tag)
+                    <option value="{{ $tag->id }}" {{ request('tag') == $tag->id ? 'selected' : '' }}>
+                        {{ $tag->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="filter-button">Filter</button>
     </form>
 
@@ -34,6 +58,12 @@
                     <strong class="job-title">{{ $job->title }}</strong>
                     <span class="job-salary">Salary: {{ $job->salary }} per month</span>
                     <span class="job-location">Location: {{ $job->location }}</span>
+                    <span class="job-category">Category: {{ $job->category ? $job->category->name : 'No category' }}</span>
+                    <span class="job-tags">Tags:
+                        @foreach($job->tags as $tag)
+                            <span class="badge badge-secondary">{{ $tag->name }}</span>
+                        @endforeach
+                    </span>
                 </a>
             </li>
         @endforeach
@@ -63,7 +93,7 @@
         font-weight: bold;
     }
 
-    .filter-group input {
+    .filter-group input, .filter-group select {
         width: 100%;
         padding: 8px;
         border: 1px solid #ddd;
@@ -83,7 +113,6 @@
         background-color: #0056b3;
     }
 
-    /* Остальные стили */
     .job-list {
         list-style: none;
         padding: 0;
@@ -119,10 +148,19 @@
         margin-bottom: 8px;
     }
 
-    .job-salary, .job-location {
+    .job-salary, .job-location, .job-category, .job-tags {
         font-size: 1rem;
         color: #666666;
         display: block;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 4px;
+        margin-right: 4px;
     }
 
     .pagination {

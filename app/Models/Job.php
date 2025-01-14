@@ -50,4 +50,14 @@ class Job extends Model
     {
         return $this->hasMany(Favorite::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'job_tag');
+    }
 }
