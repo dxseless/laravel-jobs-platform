@@ -12,3 +12,10 @@ IN PROCESS...
 - [Node.js](https://nodejs.org/) (версия 14 или выше)
 - [Git](https://git-scm.com/)
 - База данных (например, MySQL, SQLite, PostgreSQL)
+
+Запуск проекта: 
+
+- `composer install`
+- `php artisan key:generate`
+- `php artisan migrate`
+    
