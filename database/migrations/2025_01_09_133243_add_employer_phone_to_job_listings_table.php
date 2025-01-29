@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::table('job_listings', function (Blueprint $table) {
             $table->string('employer_phone')->after('location')->nullable(); 
-            $table->unsignedBigInteger('employer_id')->nullable()->after('user_id');
-            $table->foreign('employer_id')->references('id')->on('employers')->onDelete('cascade');
         });
     }
 
