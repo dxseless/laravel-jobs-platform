@@ -14,11 +14,11 @@
 
         <div class="job-details">
             <div class="job-detail">
-                <p class="job-detail-label">Зарплата</p>
+                <p class="job-detail-label">Salary</p>
                 <p class="job-detail-value">{{ $job->salary }} ₽</p>
             </div>
             <div class="job-detail">
-                <p class="job-detail-label">Локация</p>
+                <p class="job-detail-label">Location</p>
                 <p class="job-detail-value">{{ $job->location }}</p>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <form action="{{ route('jobs.like', $job) }}" method="POST">
                 @csrf
                 <button type="submit" class="button like">
-                    <span class="button-icon">❤️</span> Лайк
+                    <span class="button-icon">❤️</span> Like
                 </button>
             </form>
 
@@ -35,14 +35,14 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="button unlike">
-                    <span class="button-icon">💔</span> Убрать лайк
+                    <span class="button-icon">💔</span> Unlike
                 </button>
             </form>
 
             <form action="{{ route('jobs.favorite', $job) }}" method="POST">
                 @csrf
                 <button type="submit" class="button favorite">
-                    <span class="button-icon">⭐</span> Добавить в избранное
+                    <span class="button-icon">⭐</span> Favorite
                 </button>
             </form>
 
@@ -50,7 +50,7 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="button unfavorite">
-                    <span class="button-icon">❌</span> Убрать из избранного
+                    <span class="button-icon">❌</span> unfavorite
                 </button>
             </form>
         </div>
@@ -59,11 +59,11 @@
     @if ($job->category)
         <p>
             <strong>
-                Категория
+                Category
             </strong> {{ $job->category->name ?? ""}}</p>
         <p>
             <strong>
-                Теги:
+                Tags:
             </strong>
             @foreach($job->tags as $tag)
                 <span class="badge badge-secondary">{{ $tag->name }}</span>
