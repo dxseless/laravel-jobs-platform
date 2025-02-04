@@ -23,7 +23,7 @@ class JobController extends Controller
     public function index(Request $request)
     {
         $jobs = Job::query()
-            ->with(['category', 'tags']) // Загружаем категорию и теги
+            ->with(['category', 'tags'])
             ->when($request->title, function ($query, $title) {
                 $query->where('title', 'like', '%' . $title . '%');
             })
