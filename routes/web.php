@@ -14,9 +14,9 @@ Route::prefix('jobs')->group(function () {
     Route::get('/{job}', [JobController::class, 'show'])->name('jobs.show');
 
     Route::post('/{job}/like', [JobController::class, 'like'])->name('jobs.like');
-    Route::post('/{job}/unlike', [JobController::class, 'unlike'])->name('jobs.unlike');
+    Route::delete('/{job}/unlike', [JobController::class, 'unlike'])->name('jobs.unlike'); 
     Route::post('/{job}/favorite', [JobController::class, 'addToFavorites'])->name('jobs.favorite');
-    Route::post('/{job}/unfavorite', [JobController::class, 'removeFromFavorites'])->name('jobs.unfavorite');
+    Route::delete('/{job}/unfavorite', [JobController::class, 'removeFromFavorites'])->name('jobs.unfavorite'); 
 });
 
 Route::get('/contact', function () {
