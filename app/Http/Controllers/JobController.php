@@ -41,12 +41,12 @@ class JobController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
 
-        return view('jobs', ['jobs' => $jobs, 'categories' => $categories, 'tags' => $tags]);
+        return view('jobs.index', ['jobs' => $jobs, 'categories' => $categories, 'tags' => $tags]);
     }
     
     public function show(Job $job)
     {
-        return view('show', ['job' => $job]);
+        return view('jobs.show', ['job' => $job]);
     }
 
     public function like(Job $job)

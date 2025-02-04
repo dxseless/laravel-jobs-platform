@@ -11,12 +11,15 @@ Route::get('/', function () {
 
 Route::prefix('jobs')->group(function () {
     Route::get('/', [JobController::class, 'index'])->name('jobs.index');
-    Route::get('/{job}', [JobController::class, 'show'])->name('jobs.show');
+    Route::get('/{job}', [JobController::class, 'show'])->name('jobs.show')->whereNumber('job');
 
     Route::post('/{job}/like', [JobController::class, 'like'])->name('jobs.like');
     Route::delete('/{job}/unlike', [JobController::class, 'unlike'])->name('jobs.unlike'); 
     Route::post('/{job}/favorite', [JobController::class, 'addToFavorites'])->name('jobs.favorite');
     Route::delete('/{job}/unfavorite', [JobController::class, 'removeFromFavorites'])->name('jobs.unfavorite'); 
+    Route::get('/create', function () {
+        return view('jobs.create');
+    });
 });
 
 Route::get('/contact', function () {
