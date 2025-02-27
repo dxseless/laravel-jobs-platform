@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use App\Models\Employer;
 use App\Models\Job;
 use App\Models\User;
@@ -52,3 +54,9 @@ Route::prefix('employers')->group(function () {
         return view('employer', ['employer' => $employer]);
     });
 });
+
+Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::get('/login', [SessionController::class, 'create']);
+Route::post('/login', [SessionController::class, 'store']);
