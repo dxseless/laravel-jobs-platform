@@ -25,8 +25,8 @@ Route::prefix('jobs')->group(function () {
     Route::post('/create', function () {
         $attributes = request()->validate([
             'title' => ['required', 'min:5'],
-            'salary' => 'required',
-            'location' => 'required'
+            'salary' => ['required', 'numeric'],
+            'location' => 'required',
         ]);
 
         Job::create($attributes);
@@ -47,7 +47,6 @@ Route::prefix('employers')->group(function () {
     Route::get('/', function () {
         return view('employers', ['employers' => Employer::paginate(3)]);
     });
-
     Route::get('/{employer}', function (Employer $employer) {
         $employer->load('jobs');
         return view('employer', ['employer' => $employer]);

@@ -4,46 +4,59 @@
     </x-slot:heading>
 
     <form method="POST" action="/jobs/create">
-        @csrf
+        @csrf 
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
                 <h2 class="text-base/7 font-semibold text-gray-900">Create a new job</h2>
                 <p class="mt-1 text-sm/6 text-gray-600">We just need some information from you</p>
 
-                <div class="mt-10 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
-                    <div class="sm:col-span-4">
-                        <label for="title" class="block text-sm/6 font-medium text-gray-900">Title</label>
+                <div class="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
+                    <x-form-field>
+                        <x-form-label for="title">Title</x-form-label>
                         <div class="mt-2">
-                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                <input type="text" name="title" id="title" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Input title...">
-                            </div>
+                            <x-form-input name="title" id="title" placeholder="Input title..."></x-form-input>
+                            <x-form-error name="title"></x-form-error>
                         </div>
-                    </div>
+                    </x-form-field>
 
-                    <div class="sm:col-span-4 mt-6">
-                        <label for="salary" class="block text-sm/6 font-medium text-gray-900">Salary</label>
+                    <x-form-field>
+                        <x-form-label for="title">Salary</x-form-label>
                         <div class="mt-2">
-                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                <input type="text" name="salary" id="salary" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Input salary...">
-                            </div>
+                            <x-form-input name="salary" id="salary" placeholder="Input salary..."></x-form-input>
+                            <x-form-error name="salary"></x-form-error>
                         </div>
-                    </div>
+                    </x-form-field>
 
-                    <div class="sm:col-span-4 mt-6">
-                        <label for="location" class="block text-sm/6 font-medium text-gray-900">Location</label>
+                    <x-form-field>
+                        <x-form-label for="location">Location</x-form-label>
                         <div class="mt-2">
-                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                <input type="text" name="location" id="location" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Input location...">
-                            </div>
+                            <x-form-input name="location" id="location" placeholder="Input location..."></x-form-input>
+                            <x-form-error name="location"></x-form-error>
                         </div>
-                    </div>
+                    </x-form-field>
+
+                    <x-form-field>
+                        <x-form-label for="title">Category (Optional)</x-form-label>
+                        <div class="mt-2">
+                            <x-form-input name="category" id="category" placeholder="Input category..."></x-form-input>
+                            <x-form-error name="category"></x-form-error>
+                        </div>
+                    </x-form-field>
+
+                    <x-form-field>
+                        <x-form-label for="tags">Tags (Optional)</x-form-label>
+                        <div class="mt-2">
+                            <x-form-input name="tags" id="tags" placeholder="Input tags..."></x-form-input>
+                            <x-form-error name="tags"></x-form-error>
+                        </div>
+                    </x-form-field>
                 </div>
             </div>
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
             <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
-            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+            <x-form-button>Save</x-form-button>
         </div>
     </form>
 </x-layout>
