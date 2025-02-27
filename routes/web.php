@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JobController;
 use App\Models\Employer;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +18,20 @@ Route::prefix('jobs')->group(function () {
     Route::delete('/{job}/unlike', [JobController::class, 'unlike'])->name('jobs.unlike'); 
     Route::post('/{job}/favorite', [JobController::class, 'addToFavorites'])->name('jobs.favorite');
     Route::delete('/{job}/unfavorite', [JobController::class, 'removeFromFavorites'])->name('jobs.unfavorite'); 
+    
     Route::get('/create', function () {
         return view('jobs.create');
+    });
+    Route::post('/create', function () {
+        $attributes = request()->validate([
+            'title' => ['required', 'min:5'],
+            'salary' => 'required',
+            'location' => 'required'
+        ]);
+
+        Job::create($attributes);
+
+        return redirect('/jobs');
     });
 });
 

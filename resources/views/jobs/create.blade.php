@@ -3,7 +3,7 @@
         Create job 
     </x-slot:heading>
 
-    <form>
+    <form method="POST" action="/jobs/create">
         @csrf
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
@@ -25,6 +25,15 @@
                         <div class="mt-2">
                             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                                 <input type="text" name="salary" id="salary" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Input salary...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-4 mt-6">
+                        <label for="location" class="block text-sm/6 font-medium text-gray-900">Location</label>
+                        <div class="mt-2">
+                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                                <input type="text" name="location" id="location" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Input location...">
                             </div>
                         </div>
                     </div>

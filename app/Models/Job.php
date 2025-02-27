@@ -11,6 +11,7 @@ class Job extends Model
     use HasFactory;
 
     protected $table = 'job_listings';
+    protected $guarded = [];
 
     public function scopeFilter($query, array $filters)
     {

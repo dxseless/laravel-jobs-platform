@@ -36,13 +36,21 @@ class JobController extends Controller
             ->when($request->salary_max, function ($query, $salaryMax) {
                 $query->where('salary', '<=', $salaryMax);
             })
-            ->paginate(10);
+            ->when($request->category, function ($query, $categoryId) {
+                $query->where('category_id', $categoryId);
+            })
+            ->when($request->tag, function ($query, $tagId) {
+                $query->whereHas('tags', function ($query) use ($tagId) {
+                    $query->where('id', $tagId);
+                });
+            })
+            ->latest()->paginate(10);
 
         $categories = Category::all();
         $tags = Tag::all();
 
         return view('jobs.index', ['jobs' => $jobs, 'categories' => $categories, 'tags' => $tags]);
-    }
+    }   
     
     public function show(Job $job)
     {

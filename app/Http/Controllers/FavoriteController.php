@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite;
 use App\Models\Job;
-use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
