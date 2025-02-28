@@ -23,15 +23,15 @@ class JobController extends Controller
 
     public function edit(Job $job)
     {
-        Gate::authorize('change-job', $job);
-
         return view('jobs.edit', ['job' => $job]);
     }
 
     public function destroy(Job $job)
     {
         Gate::authorize('change-job', $job);
+        
         $job->delete();
+        
         return redirect('/jobs');
     }
 
