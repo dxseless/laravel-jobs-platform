@@ -14,7 +14,7 @@
         <div class="flex items-center">
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-                <x-nav-link href="/" aria-current="page" :active="request()->is('/')">Home</x-nav-link>
+                <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
                 <x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>   
                 <x-nav-link href="/contact" :active="request()->is('contact')" type="button">Contact</x-nav-link>
                 <x-nav-link href="/users" :active="request()->is('users')" type="button">Users</x-nav-link>
@@ -22,21 +22,19 @@
             </div>
           </div>
         </div>
-        <div class="hidden md:block">
-          <div class="ml-4 flex items-center md:ml-6">
-            <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-              <span class="sr-only">View notifications</span>
-            </button>
-
-            <div class="relative ml-3">
-              <div>
-                <button type="button" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                  <span class="sr-only">Open user menu</span>
-                </button>
-              </div>
-            </div>
+        @guest
+          <div>
+            <x-nav-link href="/login" :active="request()->is('login')">Login</x-nav-link>
+            <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
           </div>
-        </div>
+        @endguest
+
+        @auth
+          <form action="/logout" method="POST">
+            @csrf
+            <x-form-button>Log out</x-form-button>
+          </form>
+        @endauth
         <div class="-mr-2 flex md:hidden">
           <button type="button" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
             <span class="sr-only">Open main menu</span>

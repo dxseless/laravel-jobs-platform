@@ -18,9 +18,9 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'phone_number' => fake()->phoneNumber(),
+            'age' => fake()->phoneNumber(),
             'email' => fake()->email(),
-            'age' => fake()->numberBetween(18, 45),
+            'password' => fake()->password(),
         ];
     }
 }
