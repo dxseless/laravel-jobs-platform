@@ -1,76 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $job->title }}</title>
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1 class="job-title">{{ $job->title }}</h1>
+<x-layout>
+    <x-slot:heading>
+        {{ $job->title }}
+    </x-slot:heading>
 
-        <p class="job-description">{{ $job->description }}</p>
+    <p class="job-description">{{ $job->description }}</p>
 
-        <div class="job-details">
-            <div class="job-detail">
-                <p class="job-detail-label">Salary</p>
-                <p class="job-detail-value">{{ $job->salary }} ₽</p>
-            </div>
-            <div class="job-detail">
-                <p class="job-detail-label">Location</p>
-                <p class="job-detail-value">{{ $job->location }}</p>
-            </div>
+    <div class="job-details">
+        <div class="job-detail">
+            <p class="job-detail-label">Salary</p>
+            <p class="job-detail-value">{{ $job->salary }} ₽</p>
         </div>
-
-        <div class="buttons">
-            <form action="{{ route('jobs.like', $job) }}" method="POST">
-                @csrf
-                <button type="submit" class="button like">
-                    <span class="button-icon">❤️</span> Like
-                </button>
-            </form>
-
-            <form action="{{ route('jobs.unlike', $job) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="button unlike">
-                    <span class="button-icon">💔</span> Unlike
-                </button>
-            </form>
-
-            <form action="{{ route('jobs.favorite', $job) }}" method="POST">
-                @csrf
-                <button type="submit" class="button favorite">
-                    <span class="button-icon">⭐</span> Favorite
-                </button>
-            </form>
-
-            <form action="{{ route('jobs.unfavorite', $job) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="button unfavorite">
-                    <span class="button-icon">❌</span> unfavorite
-                </button>
-            </form>
+        <div class="job-detail">
+            <p class="job-detail-label">Location</p>
+            <p class="job-detail-value">{{ $job->location }}</p>
         </div>
     </div>
 
-    @if ($job->category)
-        <p>
-            <strong>
-                Category
-            </strong> {{ $job->category->name ?? ""}}</p>
-        <p>
-            <strong>
-                Tags:
-            </strong>
-            @foreach($job->tags as $tag)
-                <span class="badge badge-secondary">{{ $tag->name }}</span>
-            @endforeach
-        </p>
-    @endif
-        
+    <div class="buttons">
+        <a href="/jobs/{{ $job->id }}/edit" class="button edit">Edit</a>
+        <form action="/jobs/{{ $job->id }}" method="POST" class="inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="button delete">Delete</button>
+        </form>
+    </div>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -137,7 +91,7 @@
         .button {
             display: flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 8px 22px;
             border: none;
             border-radius: 6px;
             font-size: 1rem;
@@ -145,45 +99,22 @@
             transition: background-color 0.3s ease;
         }
 
-        .button.like {
+        .button.edit {
             background-color: #3b82f6;
             color: white;
         }
 
-        .button.like:hover {
+        .button.edit:hover {
             background-color: #2563eb;
         }
 
-        .button.unlike {
-            background-color: #ef4444;
+        .button.delete {
+            background-color: #ff0000;
             color: white;
         }
 
-        .button.unlike:hover {
-            background-color: #dc2626;
-        }
-
-        .button.favorite {
-            background-color: #f59e0b;
-            color: white;
-        }
-
-        .button.favorite:hover {
-            background-color: #d97706;
-        }
-
-        .button.unfavorite {
-            background-color: #6b7280;
-            color: white;
-        }
-
-        .button.unfavorite:hover {
-            background-color: #4b5563;
-        }
-
-        .button-icon {
-            margin-right: 8px;
+        .button.delete:hover {
+            background-color: #a61313;
         }
     </style>
-</body>
-</html>
+</x-layout>

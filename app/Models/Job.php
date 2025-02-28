@@ -7,30 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    /** @use HasFactory<\Database\Factories\JobFactory> */
     use HasFactory;
 
     protected $table = 'job_listings';
     protected $guarded = [];
-
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['title'] ?? false, function ($query, $title) {
-            $query->where('title', 'like', '%' . $title . '%');
-        });
-
-        $query->when($filters['location'] ?? false, function ($query, $location) {
-            $query->where('location', 'like', '%' . $location . '%');
-        });
-
-        $query->when($filters['salary_min'] ?? false, function ($query, $salaryMin) {
-            $query->where('salary', '>=', $salaryMin);
-        });
-
-        $query->when($filters['salary_max'] ?? false, function ($query, $salaryMax) {
-            $query->where('salary', '<=', $salaryMax);
-        });
-    }
 
     public function user()
     {
@@ -40,25 +20,5 @@ class Job extends Model
     public function employer()
     {
         return $this->belongsTo(Employer::class);
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-
-    public function favorites()
-    {
-        return $this->hasMany(Favorite::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class, 'job_tag');
     }
 }

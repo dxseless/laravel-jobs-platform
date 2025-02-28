@@ -15,8 +15,6 @@ class DatabaseSeeder extends Seeder
             EmployerSeeder::class,
             JobSeeder::class,
             UserSeeder::class,
-            TagSeeder::class,
-            CategorySeeder::class
         ]);
     }
 }

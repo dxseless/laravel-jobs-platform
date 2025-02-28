@@ -20,7 +20,7 @@
                     </x-form-field>
 
                     <x-form-field>
-                        <x-form-label for="title">Salary</x-form-label>
+                        <x-form-label for="salary">Salary</x-form-label>
                         <div class="mt-2">
                             <x-form-input name="salary" id="salary" placeholder="Input salary..."></x-form-input>
                             <x-form-error name="salary"></x-form-error>
@@ -32,22 +32,6 @@
                         <div class="mt-2">
                             <x-form-input name="location" id="location" placeholder="Input location..."></x-form-input>
                             <x-form-error name="location"></x-form-error>
-                        </div>
-                    </x-form-field>
-
-                    <x-form-field>
-                        <x-form-label for="title">Category (Optional)</x-form-label>
-                        <div class="mt-2">
-                            <x-form-input name="category" id="category" placeholder="Input category..."></x-form-input>
-                            <x-form-error name="category"></x-form-error>
-                        </div>
-                    </x-form-field>
-
-                    <x-form-field>
-                        <x-form-label for="tags">Tags (Optional)</x-form-label>
-                        <div class="mt-2">
-                            <x-form-input name="tags" id="tags" placeholder="Input tags..."></x-form-input>
-                            <x-form-error name="tags"></x-form-error>
                         </div>
                     </x-form-field>
                 </div>
