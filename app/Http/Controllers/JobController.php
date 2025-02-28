@@ -11,7 +11,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Job::query()->latest()->paginate(5);
+        $jobs = Job::query()->orderBy('id', 'DESC')->paginate(5);
 
         return view('jobs.index', ['jobs' => $jobs]);
     }   
@@ -59,7 +59,7 @@ class JobController extends Controller
         ]);
     
         $job = Job::create(array_merge($attributes, [
-            'employer_phone' => '123-456-7890',
+            'employer_phone' => Job::factory()->create()->employer_phone,
             'user_id' => Auth::id(),
         ]));
     
