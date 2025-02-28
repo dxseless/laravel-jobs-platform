@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-use function Laravel\Prompts\password;
-
 class SessionController extends Controller
 {
     public function create () 

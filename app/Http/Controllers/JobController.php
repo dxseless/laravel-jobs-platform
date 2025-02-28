@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class JobController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $jobs = Job::query()->latest()->paginate(10);
+        $jobs = Job::query()->latest()->paginate(5);
 
         return view('jobs.index', ['jobs' => $jobs]);
     }   
@@ -22,14 +23,55 @@ class JobController extends Controller
 
     public function edit(Job $job)
     {
+        Gate::authorize('change-job', $job);
+
+        return view('jobs.edit', ['job' => $job]);
+    }
+
+    public function destroy(Job $job)
+    {
+        Gate::authorize('change-job', $job);
+        $job->delete();
+        return redirect('/jobs');
+    }
+
+    public function update(Request $request, Job $job)
+    {
+        Gate::authorize('change-job', $job);
+
+        $attributes = $request->validate([
+            'title' => ['required', 'min:5'],
+            'salary' => ['required', 'numeric'],
+            'location' => 'required',
+        ]);
+
+        $job->update($attributes);
+
+        return redirect('/jobs')->with('success', 'Job updated successfully.');
+    }
+
+    public function store()
+    {
+        $attributes = request()->validate([
+            'title' => ['required', 'min:5'],
+            'salary' => ['required', 'numeric'],
+            'location' => 'required',
+        ]);
+    
+        $job = Job::create(array_merge($attributes, [
+            'employer_phone' => '123-456-7890',
+            'user_id' => Auth::id(),
+        ]));
+    
+        return redirect('/jobs');
+    }
+
+    public function create()
+    {
         if (Auth::guest()) {
             return redirect('/login');
         };
-        
-        if (Auth::guest() || $job->user_id !== Auth::id()) {
-            abort(403);
-        }
 
-        return view('jobs.edit', ['job' => $job]);
+        return view('jobs.create');
     }
 }

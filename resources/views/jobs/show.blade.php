@@ -16,14 +16,16 @@
         </div>
     </div>
 
-    <div class="buttons">
-        <a href="/jobs/{{ $job->id }}/edit" class="button edit">Edit</a>
-        <form action="/jobs/{{ $job->id }}" method="POST" class="inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="button delete">Delete</button>
-        </form>
-    </div>
+    @can('change-job', $job)
+        <div class="buttons">
+            <a href="/jobs/{{ $job->id }}/edit" class="button edit">Edit</a>
+            <form action="/jobs/{{ $job->id }}" method="POST" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="button delete">Delete</button>
+            </form>
+        </div>
+    @endcan
 
     <style>
         body {

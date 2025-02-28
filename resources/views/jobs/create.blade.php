@@ -20,7 +20,7 @@
                     </x-form-field>
 
                     <x-form-field>
-                        <x-form-label for="salary">Salary</x-form-label>
+                        <x-form-label for="salary">Salary (Dollars per year)</x-form-label>
                         <div class="mt-2">
                             <x-form-input name="salary" id="salary" placeholder="Input salary..."></x-form-input>
                             <x-form-error name="salary"></x-form-error>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
+            <a href="/jobs" type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</a>
             <x-form-button>Save</x-form-button>
         </div>
     </form>

@@ -4,9 +4,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Models\Employer;
-use App\Models\Job;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,28 +12,13 @@ Route::get('/', function () {
 });
 
 Route::prefix('jobs')->group(function () {
-    Route::get('/', [JobController::class, 'index'])->name('jobs.index');
-    Route::get('/{job}', [JobController::class, 'show'])->name('jobs.show')->whereNumber('job');
+    Route::get('/', [JobController::class, 'index']);
+    Route::get('/{job}', [JobController::class, 'show'])->whereNumber('job');
+    Route::delete('/{job}', [JobController::class, 'destroy']);
     Route::get('/{job}/edit', [JobController::class, 'edit']);
-
-    Route::get('/create', function () {
-        if (Auth::guest()) {
-            return redirect('/login');
-        };
-
-        return view('jobs.create');
-    });
-    Route::post('/create', function () {
-        $attributes = request()->validate([
-            'title' => ['required', 'min:5'],
-            'salary' => ['required', 'numeric'],
-            'location' => 'required',
-        ]);
-
-        Job::create($attributes);
-
-        return redirect('/jobs');
-    });
+    Route::patch('/{job}', [JobController::class, 'update']);
+    Route::post('/create', [JobController::class, 'store']);
+    Route::get('/create', [JobController::class, 'create']);
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
