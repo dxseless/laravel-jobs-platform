@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JobPosted;
+use App\Models\Employer;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
@@ -57,12 +60,24 @@ class JobController extends Controller
             'salary' => ['required', 'numeric'],
             'location' => 'required',
         ]);
-    
-        $job = Job::create(array_merge($attributes, [
-            'employer_phone' => Job::factory()->create()->employer_phone,
+
+        $employer = Employer::create([
             'user_id' => Auth::id(),
+            'title' => fake()->company(), 
+            'main_office_location' => fake()->city(), 
+            'employer_phone' => fake()->phoneNumber(), 
+        ]);
+
+        $job = Job::create(array_merge($attributes, [
+            'employer_phone' => $employer->employer_phone,
+            'user_id' => Auth::id(),
+            'employer_id' => $employer->id,
         ]));
-    
+
+        Mail::to($job->employer->user->email)->send(
+            new JobPosted($job)
+        );
+
         return redirect('/jobs');
     }
 
