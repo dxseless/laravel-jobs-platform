@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('title');
             $table->integer('salary');
             $table->string('location');
+            $table->string('employer_phone');
+            $table->unsignedBigInteger('user_id')->nullable()->after('id'); 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('employer_id')->nullable()->after('user_id');
+            $table->foreign('employer_id')->references('id')->on('employers')->onDelete('cascade');
             $table->timestamps();
         });
     }
