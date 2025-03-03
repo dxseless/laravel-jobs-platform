@@ -20,10 +20,13 @@ IN PROCESS...
 - `php artisan key:generate`
 - `php artisan migrate`
 - `php artisan db:seed`
+- `php artisan queue:work`
 - `php artisan serve`
+- `npm install`
+- `npm run dev`
 
 OR
 
 - `make setup`
 
-Для получения письма при создании вакансии запустите `php artisan queue:work`, а также воспользуйтесь сервсисом mailtrap или его аналогом .
+Для получения письма при создании вакансии воспользуйтесь сервсисом mailtrap или его аналогом .
