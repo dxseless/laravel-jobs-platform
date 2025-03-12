@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\JobRequest; // Импортируем класс запроса
 
 class JobController extends Controller
 {
@@ -38,28 +39,18 @@ class JobController extends Controller
         return redirect('/jobs');
     }
 
-    public function update(Request $request, Job $job)
+    public function update(JobRequest $request, Job $job)
     {
         Gate::authorize('edit', $job);
 
-        $attributes = $request->validate([
-            'title' => ['required', 'min:5'],
-            'salary' => ['required', 'numeric'],
-            'location' => 'required',
-        ]);
-
-        $job->update($attributes);
+        $job->update($request->validated()); 
 
         return redirect('/jobs')->with('success', 'Job updated successfully.');
     }
 
-    public function store()
+    public function store(JobRequest $request) 
     {
-        $attributes = request()->validate([
-            'title' => ['required', 'min:5'],
-            'salary' => ['required', 'numeric'],
-            'location' => 'required',
-        ]);
+        $attributes = $request->validated();
 
         $employer = Employer::create([
             'user_id' => Auth::id(),

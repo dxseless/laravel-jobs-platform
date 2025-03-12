@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\LoginRequest;
 
 class SessionController extends Controller
 {
-    public function create () 
+    public function create() 
     {
         return view('auth.login');
     }
 
-    public function store () 
+    public function store(LoginRequest $request) 
     {
-        $attributes = request()->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required',
-        ]);
+        $attributes = $request->validated();
         
         if (! Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
@@ -25,12 +23,12 @@ class SessionController extends Controller
             ]);
         }
 
-        request()->session()->regenerate();
+        $request->session()->regenerate();
 
         return redirect('/');
     }
 
-    public function destroy () 
+    public function destroy() 
     {
         Auth::logout();
 
