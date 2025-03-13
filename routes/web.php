@@ -30,10 +30,6 @@ Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 
-Route::get('/contact', function () {
-    return view('contact');
-});
-
 Route::get('/users', function () {
     return view('users', ['users' => User::latest()->paginate(3)]);
 });
