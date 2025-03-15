@@ -33,13 +33,11 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease; 
         }
 
-        /* Стили при наведении на элемент */
         .user-item:hover {
             transform: translateY(-4px); 
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
-        /* Стили для ссылки */
         .user-link {
             display: block;
             padding: 16px; 

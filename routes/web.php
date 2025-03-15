@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SessionController;
 use App\Models\Employer;
 use App\Models\User;
@@ -35,14 +37,12 @@ Route::get('/users', function () {
 });
 
 Route::prefix('employers')->group(function () {
-    Route::get('/', function () {
-        return view('employers', ['employers' => Employer::paginate(3)]);
-    });
-    Route::get('/{employer}', function (Employer $employer) {
-        $employer->load('jobs');
-        return view('employer', ['employer' => $employer]);
-    });
+    Route::get('/', [EmployerController::class, 'index']);
+    Route::get('/{employer}', [EmployerController::class, 'show']);
 });
 
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+Route::post('/employers/{employer}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/employers/{employer}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
