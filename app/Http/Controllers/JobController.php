@@ -14,9 +14,9 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Job::latest()->paginate(5);
+        $jobs = Job::with('employer')->latest()->paginate(5);
         return view('jobs.index', compact('jobs'));
-    }   
+    } 
     
     public function show(Job $job)
     {
@@ -28,40 +28,40 @@ class JobController extends Controller
         return view('jobs.edit', compact('job'));
     }
 
-    public function destroy(Job $job)
+    protected function redirectWithSuccess($route, $message) {
+        return redirect($route)->with('success', $message);
+    }
+
+    public function destroy(Job $job) 
     {
         Gate::authorize('edit', $job);
         $job->delete();
-        return redirect('/jobs')->with('success', 'Работа успешно удалена.');
+        return $this->redirectWithSuccess('/jobs', 'Работа успешно удалена.');
     }
 
-    public function update(JobRequest $request, Job $job)
+    public function update(JobRequest $request, Job $job) 
     {
         Gate::authorize('edit', $job);
-        $job->update($request->validated()); 
-        return redirect('/jobs')->with('success', 'Работа успешно обновлена.');
+        $job->update($request->validated());
+        return $this->redirectWithSuccess('/jobs', 'Работа успешно обновлена.');
     }
 
     public function store(JobRequest $request) 
     {
         $attributes = $request->validated();
-
         $employer = Employer::create([
             'user_id' => Auth::id(),
-            'title' => fake()->company(), 
-            'main_office_location' => fake()->city(), 
-            'employer_phone' => fake()->phoneNumber(), 
+            'title' => fake()->company(),
+            'main_office_location' => fake()->city(),
+            'employer_phone' => fake()->phoneNumber(),
         ]);
-
         $job = Job::create(array_merge($attributes, [
             'employer_phone' => $employer->employer_phone,
             'user_id' => Auth::id(),
             'employer_id' => $employer->id,
         ]));
-
         Mail::to($job->employer->user->email)->queue(new JobPosted($job));
-
-        return redirect('/jobs')->with('success', 'Работа успешно размещена.');
+        return $this->redirectWithSuccess('/jobs', 'Работа успешно размещена.');
     }
 
     public function create()
