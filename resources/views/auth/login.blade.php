@@ -24,8 +24,16 @@
                         </div>
                     </x-form-field>
                 </div>
+                <div class="mt-8 text-sm text-gray-600">
+                    Don't have an account? 
+                    <a href="/register" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
+                        Register now
+                    </a>
+                </div>
             </div>
         </div>
+
+        
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
             <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
