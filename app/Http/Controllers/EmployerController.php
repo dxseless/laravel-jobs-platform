@@ -8,7 +8,7 @@ class EmployerController
 {
     public function index()
     {
-        $employers = Employer::paginate(3);
+        $employers = Employer::paginate(10);
         return view('employers', compact('employers'));
     }
 

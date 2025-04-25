@@ -13,15 +13,17 @@ class PopulateEmployersAndJobs extends Seeder
      */
     public function run()
     {
-        Employer::factory(10)->create();
-
-        $employers = Employer::all();
-
-        $jobs = Job::all();
-
-        $jobs->each(function ($job) use ($employers) {
-            $job->employer_id = $employers->random()->id; 
-            $job->save();
+        $employers = Employer::with('user')->get();
+        
+        Job::whereNull('employer_id')->chunk(200, function ($jobs) use ($employers) {
+            foreach ($jobs as $job) {
+                $randomEmployer = $employers->random();
+                $job->update([
+                    'employer_id' => $randomEmployer->id,
+                    'employer_phone' => $randomEmployer->employer_phone,
+                    'user_id' => $randomEmployer->user->id,
+                ]);
+            }
         });
     }
 }

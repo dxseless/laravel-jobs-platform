@@ -11,16 +11,21 @@
         </p>
 
         <h2 class="text-2xl font-semibold text-gray-800 mt-6 mb-4">Posted Jobs</h2>
-        <ul class="space-y-4">
-            @foreach ($employer->jobs as $job)
-                <li class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-200">
-                    <a href="/jobs/{{ $job->id }}" class="block text-gray-800">
-                        <strong class="text-xl">{{ $job->title }}</strong>
-                        <span class="block text-gray-600">Salary: {{ $job->salary }} per month</span>
-                    </a>
-                </li>
-            @endforeach
-        </ul>
+        @if($employer->jobs->count() > 0)
+            <ul class="space-y-4">
+                @foreach ($employer->jobs as $job)
+                    <li class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-200">
+                        <a href="/jobs/{{ $job->id }}" class="block text-gray-800">
+                            <strong class="text-xl">{{ $job->title }}</strong>
+                            <span class="block text-gray-600">Salary: {{ number_format($job->salary, 0) }} ₽ per month</span>
+                            <span class="block text-sm text-gray-500">Posted {{ $job->created_at->diffForHumans() }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @else
+            <p class="text-gray-500 italic">This employer hasn't posted any jobs yet.</p>
+        @endif
 
         <h2 class="text-2xl font-semibold text-gray-800 mt-6 mb-4">Reviews</h2>
         <ul class="space-y-4">

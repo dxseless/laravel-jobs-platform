@@ -49,17 +49,24 @@ class JobController
     public function store(JobRequest $request) 
     {
         $attributes = $request->validated();
-        $employer = Employer::create([
-            'user_id' => Auth::id(),
-            'title' => fake()->company(),
-            'main_office_location' => fake()->city(),
-            'employer_phone' => fake()->phoneNumber(),
-        ]);
+        
+        $employer = Employer::where('user_id', Auth::id())->first();
+        
+        if (!$employer) {
+            $employer = Employer::create([
+                'user_id' => Auth::id(),
+                'title' => fake()->company(),
+                'main_office_location' => fake()->city(),
+                'employer_phone' => fake()->phoneNumber(),
+            ]);
+        }
+        
         $job = Job::create(array_merge($attributes, [
             'employer_phone' => $employer->employer_phone,
             'user_id' => Auth::id(),
             'employer_id' => $employer->id,
         ]));
+        
         Mail::to($job->employer->user->email)->queue(new JobPosted($job));
         return $this->redirectWithSuccess('/jobs', 'Работа успешно размещена.');
     }
