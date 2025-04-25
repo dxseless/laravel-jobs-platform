@@ -7,7 +7,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ReviewController extends Controller
+class ReviewController
 {
     public function store(Request $request, Employer $employer)
     {

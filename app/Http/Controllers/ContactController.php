@@ -6,7 +6,7 @@ use App\Http\Requests\ContactRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormSubmitted;
 
-class ContactController extends Controller
+class ContactController
 {
     public function create()
     {

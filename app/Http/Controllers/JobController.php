@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\JobRequest;
 
-class JobController extends Controller
+class JobController
 {
     public function index()
     {

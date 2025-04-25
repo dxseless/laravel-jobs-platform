@@ -20,7 +20,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'age' => fake()->numberBetween(18, 60),
             'email' => fake()->email(),
-            'password' => fake()->password(),
+            'password' => bcrypt(fake()->password()),
         ];
     }
 }

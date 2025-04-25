@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\LoginRequest;
 
-class SessionController extends Controller
+class SessionController
 {
     public function create() 
     {

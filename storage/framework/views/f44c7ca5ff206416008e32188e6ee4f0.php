@@ -1,0 +1,1 @@
+<label <?php echo e($attributes->merge(["class" => "block text-sm mt-4 font-medium text-gray-900"])); ?>><?php echo e($slot); ?></label><?php /**PATH /home/dxseless/laravel/laravel-jobs-platform/resources/views/components/form-label.blade.php ENDPATH**/ ?>
